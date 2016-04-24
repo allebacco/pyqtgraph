@@ -136,7 +136,7 @@ public:
      * \brief Parent ViewBox
      * \return The parent ViewBox or nullptr is not exists
      */
-    virtual ViewBoxBase* getNativeViewBox() const;
+    ViewBoxBase* getNativeViewBox() const;
 
     /*!
      * \brief First parent ViewBox or GraphicsView
@@ -148,7 +148,7 @@ public:
      *
      * \return The first parent ViewBox or GraphicsView
      */
-    QObject* getViewBox() const
+    virtual QObject* getViewBox() const
     {
         getNativeViewBox();
         if(mViewBox!=nullptr)

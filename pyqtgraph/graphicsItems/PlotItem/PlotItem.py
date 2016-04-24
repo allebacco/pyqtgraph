@@ -129,8 +129,8 @@ class PlotItem(GraphicsItem, PlotItemBase):
                         and the values must be instances of AxisItem (or at least compatible with AxisItem).
         ==============  ==========================================================================================
         """
-        
-        PlotItemBase.__init__(self, parent)
+        viewBox = viewBox if viewBox is not None else ViewBox()
+        PlotItemBase.__init__(self, parent, viewBox=viewBox)
         GraphicsItem.__init__(self)
         
         self.setSizePolicy(QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Expanding)
@@ -152,9 +152,10 @@ class PlotItem(GraphicsItem, PlotItemBase):
         self.layout.setHorizontalSpacing(0)
         self.layout.setVerticalSpacing(0)
         
-        if viewBox is None:
-            viewBox = ViewBox(parent=self)
-        self.vb = viewBox
+        #if viewBox is None:
+        #    viewBox = ViewBox(parent=self)
+        #self.vb = viewBox
+        self.vb = self.getViewBox()
         self.vb.sigStateChanged.connect(self.viewStateChanged)
         self.setMenuEnabled(enableMenu, enableMenu) ## en/disable plotitem and viewbox menus
         
@@ -299,17 +300,23 @@ class PlotItem(GraphicsItem, PlotItemBase):
     def implements(self, interface=None):
         return interface in ['ViewBoxWrapper']
 
-    def getViewBox(self):
-        """Return the :class:`ViewBox <pyqtgraph.ViewBox>` contained within."""
-        return self.vb
+    #def getViewBox(self):
+    #    """Return the :class:`ViewBox <pyqtgraph.ViewBox>` contained within."""
+    #    return self.vb
 
     
     ## Wrap a few methods from viewBox. 
     #Important: don't use a settattr(m, getattr(self.vb, m)) as we'd be leaving the viebox alive
     #because we had a reference to an instance method (creating wrapper methods at runtime instead).
     
-    for m in ['setXRange', 'setYRange', 'setXLink', 'setYLink', 'setAutoPan',         # NOTE: 
-              'setAutoVisible', 'setRange', 'autoRange', 'viewRect', 'viewRange',     # If you update this list, please 
+    #for m in ['setXRange', 'setYRange', 'setXLink', 'setYLink', 'setAutoPan',         # NOTE: 
+    #          'setAutoVisible', 'setRange', 'autoRange', 'viewRect', 'viewRange',     # If you update this list, please 
+    #          'setMouseEnabled', 'setLimits', 'enableAutoRange', 'disableAutoRange',  # update the class docstring 
+    #          'setAspectLocked', 'invertY', 'invertX', 'register', 'unregister']:                # as well.
+                
+
+    for m in ['setXLink', 'setYLink', 'setAutoPan',         # NOTE: 
+              'setAutoVisible', 'autoRange', 'viewRect', 'viewRange',     # If you update this list, please 
               'setMouseEnabled', 'setLimits', 'enableAutoRange', 'disableAutoRange',  # update the class docstring 
               'setAspectLocked', 'invertY', 'invertX', 'register', 'unregister']:                # as well.
                 
