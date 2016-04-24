@@ -247,16 +247,6 @@ public:
     void enableAutoRange(const Axis axis=XYAxes, const bool enable=true);
 
     /*!
-     * \brief Enable (or disable) auto-range for axis.
-     *
-     * When enabled, the axis will automatically rescale when items are added/removed or change their shape.
-     *
-     * \param QString Axis, which may be "x", "y", or "xy" for both.
-     * \param enable Enabling state
-     */
-    void enableAutoRange(const QString& axis="xy", const bool enable=true);
-
-    /*!
      * \brief Maps from the local coordinates of the ViewBox to the coordinate system displayed inside the ViewBox
      * \param point
      * \return

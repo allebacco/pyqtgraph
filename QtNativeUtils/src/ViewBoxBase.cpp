@@ -502,16 +502,6 @@ void ViewBoxBase::enableAutoRange(const ViewBoxBase::Axis axis, const bool enabl
     emit sigStateChanged(this);
 }
 
-void ViewBoxBase::enableAutoRange(const QString& axis, const bool enable)
-{
-    if(axis=="xy")
-        enableAutoRange(XYAxes, enable);
-    else if(axis=="x")
-        enableAutoRange(XAxis, enable);
-    else if(axis=="y")
-        enableAutoRange(YAxis, enable);
-}
-
 QRectF ViewBoxBase::itemBoundingRect(const QGraphicsItem *item) const
 {
     // Return the bounding rect of the item in view coordinates

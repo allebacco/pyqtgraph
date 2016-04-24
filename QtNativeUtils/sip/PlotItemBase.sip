@@ -101,6 +101,100 @@ public:
     void setXRange(const double minR, const double maxR, const double padding=ViewBoxBase::AutoPadding);
     void setYRange(const double minR, const double maxR, const double padding=ViewBoxBase::AutoPadding);
 
+    void setXLink(ViewBoxBase* view);
+    void setYLink(ViewBoxBase* view);
+
+    void setAutoPan(const bool x=false, const bool y=false);
+    void setAutoVisible(const bool x=false, const bool y=false);
+
+    void autoRange(const double padding=ViewBoxBase::AutoPadding);
+    void autoRange(const QList<QGraphicsItem*>& items, const double padding=ViewBoxBase::AutoPadding);
+
+    void enableAutoRange(const Axis axis=XYAxes, const bool enable=true);
+    void disableAutoRange(const Axis ax=XYAxes);
+
+    virtual QRectF viewRect() const;
+    const QList<Range>& viewRange() const;
+
+    void setMouseEnabled(const bool enabledOnX=true, const bool enabledOnY=true);
+
+    void setXLimits(const Range& rng);
+    void setYLimits(const Range& rng);
+    void setXRangeLimits(const Range& rng);
+    void setYRangeLimits(const Range& rng);
+
+    void setLimits() /NoArgParser/;
+    %MethodCode
+        // "xMin", "xMax", "yMin", "yMax", "minXRange", "maxXRange", "minYRange", "maxYRange"
+        // PyObject *sipSelf, PyObject *sipArgs, PyObject *sipKwds
+
+        bool sipSelfWasArg = (!sipSelf || sipIsDerived((sipSimpleWrapper *)sipSelf));
+
+        if(!sipSelfWasArg)
+        {
+            if(!PyTuple_Size(sipArgs)==1)
+                return NULL;
+
+            sipSelf = PyTuple_GetItem(sipArgs, 0);
+        }
+
+        if(!sipCanConvertToType(sipSelf, sipType_PlotItemBase, SIP_NOT_NONE))
+        {
+            return NULL;
+        }
+
+        int vbstate = 0, sipIsErr = 0;
+        PlotItemBase* plotitem = reinterpret_cast<PlotItemBase*>(sipConvertToType(sipSelf, sipType_PlotItemBase, 0, 0, &vbstate, &sipIsErr));
+
+        ViewBoxBase* viewBox = plotitem->getNativeViewBox();
+        Range rng = viewBox->xLimits();
+        PyObject* val = PyDict_GetItemString(sipKwds, "xMin");
+        if(val!=nullptr)
+            rng.setMin((val==Py_None) ? Range::NO_LIMIT : pyAsDouble(val));
+        val = PyDict_GetItemString(sipKwds, "xMax");
+        if(val!=nullptr)
+            rng.setMax((val==Py_None) ? Range::NO_LIMIT : pyAsDouble(val));
+        viewBox->setXLimits(rng);
+
+        rng = viewBox->yLimits();
+        val = PyDict_GetItemString(sipKwds, "yMin");
+        if(val!=nullptr)
+            rng.setMin((val==Py_None) ? Range::NO_LIMIT : pyAsDouble(val));
+        val = PyDict_GetItemString(sipKwds, "yMax");
+        if(val!=nullptr)
+            rng.setMax((val==Py_None) ? Range::NO_LIMIT : pyAsDouble(val));
+        viewBox->setYLimits(rng);
+
+        rng = viewBox->xRangeLimits();
+        val = PyDict_GetItemString(sipKwds, "minXRange");
+        if(val!=nullptr)
+            rng.setMin((val==Py_None) ? Range::NO_LIMIT : pyAsDouble(val));
+        val = PyDict_GetItemString(sipKwds, "maxXRange");
+        if(val!=nullptr)
+            rng.setMax((val==Py_None) ? Range::NO_LIMIT : pyAsDouble(val));
+        viewBox->setXRangeLimits(rng);
+
+        rng = viewBox->yRangeLimits();
+        val = PyDict_GetItemString(sipKwds, "minYRange");
+        if(val!=nullptr)
+            rng.setMin((val==Py_None) ? Range::NO_LIMIT : pyAsDouble(val));
+        val = PyDict_GetItemString(sipKwds, "maxYRange");
+        if(val!=nullptr)
+            rng.setMax((val==Py_None) ? Range::NO_LIMIT : pyAsDouble(val));
+        viewBox->setYRangeLimits(rng);
+
+        viewBox->updateViewRange();
+
+        sipReleaseType(plotitem, sipType_PlotItemBase, vbstate);
+
+        Py_RETURN_NONE;
+    %End
+
+    void setAspectLocked(const bool lock=true, const double ratio=1.0);
+
+    void invertY(const bool b=true);
+    void invertX(const bool b=true);
+
 signals:
 
     void sigYRangeChanged(const Range& range);

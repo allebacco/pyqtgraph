@@ -315,10 +315,7 @@ class PlotItem(GraphicsItem, PlotItemBase):
     #          'setAspectLocked', 'invertY', 'invertX', 'register', 'unregister']:                # as well.
                 
 
-    for m in ['setXLink', 'setYLink', 'setAutoPan',         # NOTE: 
-              'setAutoVisible', 'autoRange', 'viewRect', 'viewRange',     # If you update this list, please 
-              'setMouseEnabled', 'setLimits', 'enableAutoRange', 'disableAutoRange',  # update the class docstring 
-              'setAspectLocked', 'invertY', 'invertX', 'register', 'unregister']:                # as well.
+    for m in ['register', 'unregister']:                # as well.
                 
         def _create_method(name):
             def method(self, *args, **kwargs):
