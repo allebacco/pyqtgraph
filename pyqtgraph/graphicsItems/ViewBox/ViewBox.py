@@ -137,7 +137,7 @@ class ViewBox(ViewBoxBase):
         ==============  =============================================================
         """
 
-        ViewBoxBase.__init__(self, parent=parent, wFlags=Qt.Widget, border=border, lockAspect=lockAspect, invertX=invertX, invertY=invertY, enableMouse=enableMouse)
+        ViewBoxBase.__init__(self, parent=parent, wFlags=Qt.Widget, border=border, lockAspect=lockAspect, invertX=invertX, invertY=invertY, enableMouse=enableMouse, enableMenu=enableMenu)
 
         #GraphicsItem.__init__(self)
         self.name = None
@@ -146,7 +146,7 @@ class ViewBox(ViewBoxBase):
 
         #self._lastScene = None  ## stores reference to the last known scene this view was a part of.
 
-        self.state = {
+        #self.state = {
 
             ## separating targetRange and viewRange allows the view to be resized
             ## while keeping all previously viewed contents visible
@@ -163,7 +163,7 @@ class ViewBox(ViewBoxBase):
 
             #'mouseEnabled': [enableMouse, enableMouse],
             #'mouseMode': ViewBox.PanMode if getConfigOption('leftButtonPan') else ViewBox.RectMode,
-            'enableMenu': enableMenu,
+            #'enableMenu': enableMenu,
             #'wheelScaleFactor': -1.0 / 8.0,
 
             # Limits
@@ -174,7 +174,7 @@ class ViewBox(ViewBoxBase):
             #    'yRange': [None, None],   # Maximum and minimum Y range
             #    }
 
-        }
+        #}
 
         self._updatingRange = False  ## Used to break recursive loops. See updateAutoRange.
         #self._itemBoundsCache = weakref.WeakKeyDictionary()
@@ -222,7 +222,7 @@ class ViewBox(ViewBoxBase):
 
         #self.border = fn.mkPen(border)
 
-        self.menu = QtGui.QMenu() #ViewBoxMenu(self)
+        #self.menu = QtGui.QMenu() #ViewBoxMenu(self)
 
         self.register(name)
         if name is None:
@@ -398,14 +398,14 @@ class ViewBox(ViewBoxBase):
     def mouseEnabled(self):
         return self.state['mouseEnabled'][:]
     '''
-
+    '''
     def setMenuEnabled(self, enableMenu=True):
         self.state['enableMenu'] = enableMenu
         self.sigStateChanged.emit(self)
 
     def menuEnabled(self):
         return self.state.get('enableMenu', True)
-
+    '''
     '''
     def addItem(self, item, ignoreBounds=False):
         """
@@ -1264,20 +1264,22 @@ class ViewBox(ViewBoxBase):
     '''
 
     def mouseClickEvent(self, ev):
+        print 'mouse click', ev
         if ev.button() == QtCore.Qt.RightButton and self.menuEnabled():
             ev.accept()
             self.raiseContextMenu(ev)
 
     def raiseContextMenu(self, ev):
+        print ev
         menu = self.getMenu(ev)
         self.scene().addParentContextMenus(self, menu, ev)
         menu.popup(ev.screenPos())
 
-    def getMenu(self, ev):
-        return self.menu
+    #def getMenu(self, ev):
+    #    return self.menu
 
-    def getContextMenus(self, event):
-        return self.menu.actions() if self.menuEnabled() else []
+    #def getContextMenus(self, event):
+    #    return self.menu.actions() if self.menuEnabled() else []
 
     '''
     def mouseDragEvent(self, ev, axis=None):

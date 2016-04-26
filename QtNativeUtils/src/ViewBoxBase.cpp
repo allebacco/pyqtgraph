@@ -4,11 +4,12 @@
 
 #include <QSizePolicy>
 #include <QDebug>
+#include <QMenu>
 
 #include "QGraphicsScene2.h"
 #include "graphicsitems/ChildGroup.h"
 
-ViewBoxBase::ViewBoxBase(QGraphicsItem *parent, Qt::WindowFlags wFlags, const QPen& border, const double lockAspect, const bool invertX, const bool invertY, const bool enableMouse) :
+ViewBoxBase::ViewBoxBase(QGraphicsItem *parent, Qt::WindowFlags wFlags, const QPen& border, const double lockAspect, const bool invertX, const bool invertY, const bool enableMouse, const bool enableMenu) :
     GraphicsWidget(parent, wFlags),
     mMatrixNeedsUpdate(true),
     mAutoRangeNeedsUpdate(true),
@@ -18,7 +19,8 @@ ViewBoxBase::ViewBoxBase(QGraphicsItem *parent, Qt::WindowFlags wFlags, const QP
     mBorder(border),
     mWheelScaleFactor(-1.0/8.0),
     mLinksBlocked(false),
-    mUpdatingRange(false)
+    mUpdatingRange(false),
+    mEnableMenu(enableMenu)
 {
     Range::registerMetatype();
 
@@ -70,6 +72,13 @@ ViewBoxBase::ViewBoxBase(QGraphicsItem *parent, Qt::WindowFlags wFlags, const QP
 
     mLinkedViews.clear();
     mLinkedViews << QWeakPointer<ViewBoxBase>() << QWeakPointer<ViewBoxBase>();
+
+    mMenu = new QMenu();
+}
+
+ViewBoxBase::~ViewBoxBase()
+{
+    mMenu->deleteLater();
 }
 
 void ViewBoxBase::updateViewRange(const bool forceX, const bool forceY)
@@ -201,6 +210,7 @@ void ViewBoxBase::updateViewRange(const bool forceX, const bool forceY)
         setMatrixNeedsUpdate(true);
     }
 /*
+    TODO: to be implemented
     if any(changed):
         self.sigRangeChanged.emit(Range(viewRange[0]), Range(viewRange[1]))
         self.update()
@@ -1260,6 +1270,28 @@ void ViewBoxBase::autoRange(const QList<QGraphicsItem *>& items, const double pa
 void ViewBoxBase::disableAutoRange(const ExtendedItem::Axis ax)
 {
     enableAutoRange(ax, false);
+}
+
+void ViewBoxBase::setMenuEnabled(const bool enableMenu)
+{
+    mEnableMenu = enableMenu;
+    emit sigStateChanged(this);
+}
+/*
+void ViewBoxBase::mouseClickEvent(MouseClickEvent *event)
+{
+    if(event->button()==Qt::RightButton && mEnableMenu)
+    {
+        event->accept();
+        raiseContextMenu(event);
+    }
+}
+*/
+QList<QAction*> ViewBoxBase::getContextMenus(QEvent *event)
+{
+    if(mEnableMenu)
+        return mMenu->actions();
+    return QList<QAction*>();
 }
 
 void ViewBoxBase::wheelEvent(QGraphicsSceneWheelEvent* event)

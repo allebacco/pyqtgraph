@@ -132,6 +132,8 @@ public:
     virtual void hoverEvent(HoverEvent* event) { event->ignore(); }
     virtual void mouseDragEvent(MouseDragEvent* event) { event->ignore(); }
 
+    //virtual QList<QAction*> getContextMenus(QEvent* event) { return QList<QAction*>(); }
+
     /*!
      * \brief Parent ViewBox
      * \return The parent ViewBox or nullptr is not exists

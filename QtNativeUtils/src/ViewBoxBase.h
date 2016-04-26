@@ -101,8 +101,8 @@ public:
      */
     ViewBoxBase(QGraphicsItem* parent=nullptr, Qt::WindowFlags wFlags=0, const QPen& border=QPen(Qt::NoPen),
                 const double lockAspect=0.0,const bool invertX=false, const bool invertY=false,
-                const bool enableMouse=true);
-    virtual ~ViewBoxBase() {}
+                const bool enableMouse=true, const bool enableMenu=true);
+    virtual ~ViewBoxBase();
 
     enum { Type = CustomItemTypes::TypeViewBox };
 
@@ -129,7 +129,6 @@ public:
     void updateMatrix();
 
     virtual void itemBoundsChanged(QGraphicsItem* item);
-
 
     bool matrixNeedsUpdate() const { return mMatrixNeedsUpdate; }
     void setMatrixNeedsUpdate(const bool on) { mMatrixNeedsUpdate = on; }
@@ -863,6 +862,14 @@ public:
      */
     void disableAutoRange(const Axis ax=XYAxes);
 
+    void setMenuEnabled(const bool enableMenu=true);
+    bool menuEnabled() const { return mEnableMenu; }
+
+    //virtual void mouseClickEvent(MouseClickEvent* event);
+    virtual QList<QAction*> getContextMenus(QEvent* event);
+    QMenu* getMenu(MouseClickEvent* event) const { return mMenu; }
+    //virtual void raiseContextMenu(MouseClickEvent* event) {}
+
 public slots:
 
     void prepareForPaint();
@@ -979,6 +986,10 @@ protected:
     QVector<QWeakPointer<ViewBoxBase> > mLinkedViews;
 
     bool mUpdatingRange;
+
+    bool mEnableMenu;
+
+    QMenu* mMenu;
 };
 
 #endif // VIEWBOXBASE_H

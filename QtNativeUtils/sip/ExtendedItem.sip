@@ -82,6 +82,8 @@ public:
     virtual void hoverEvent(HoverEvent* event);
     virtual void mouseDragEvent(MouseDragEvent* event);
 
+    //virtual QList<QAction*> getContextMenus(QEvent* event);
+
     virtual SIP_PYOBJECT getViewBox() const [QObject*()];
     %MethodCode
         QObject* obj = sipCpp->getViewBox();

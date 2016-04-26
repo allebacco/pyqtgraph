@@ -18,7 +18,8 @@ public:
     };
 
     ViewBoxBase(QGraphicsItem* parent=nullptr, Qt::WindowFlags wFlags=0, const QPen& border=QPen(Qt::NoPen),
-                const double lockAspect=0.0, const bool invertX=false, const bool invertY=false, const bool enableMouse=true) /HoldGIL/;
+                const double lockAspect=0.0, const bool invertX=false, const bool invertY=false,
+                const bool enableMouse=true, const bool enableMenu=true) /HoldGIL/;
     virtual ~ViewBoxBase() /HoldGIL/;
 
     virtual int type() const /HoldGIL/;
@@ -545,6 +546,14 @@ public:
     void autoRange(const QList<QGraphicsItem*>& items, const double padding=ViewBoxBase::AutoPadding);
 
     void disableAutoRange(const Axis ax=XYAxes);
+
+    void setMenuEnabled(const bool enableMenu=true);
+    bool menuEnabled() const;
+
+    //virtual void mouseClickEvent(MouseClickEvent* event);
+    virtual QList<QAction*> getContextMenus(QEvent* event);
+    QMenu* getMenu(MouseClickEvent* event) const;
+    //virtual void raiseContextMenu(MouseClickEvent* event);
 
 public slots:
 
