@@ -16,6 +16,7 @@ from .Qt import QtGui, QtCore, USE_PYSIDE
 from . import getConfigOption, setConfigOptions
 from . import debug
 from .QtNativeUtils import Point, Range
+from . import QtNativeUtils
 
 
 
@@ -1341,6 +1342,10 @@ def arrayToQPath(x, y, connect='all'):
     should be connected, or an array of int32 values (0 or 1) indicating
     connections.
     """
+    if type(connect) is str:
+        x = x.astype(np.float64)
+        y = y.astype(np.float64)
+        return QtNativeUtils.arrayToQPath(x, y, connect.lower())
 
     ## Create all vertices in path. The method used below creates a binary format so that all
     ## vertices can be read in at once. This binary format may change in future versions of Qt,

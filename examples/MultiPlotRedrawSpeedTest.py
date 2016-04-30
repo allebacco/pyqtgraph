@@ -28,7 +28,7 @@ for i in xrange(nPlots):
     c.setPos(0, i*6)
     curves.append(c)
 
-data = np.random.normal(size=(nPlots*23, nSamples))
+data = np.random.normal(size=(nPlots*23, nSamples)).astype(np.float64)
 for i in xrange(nPlots):
     curves[i].setData(data[i % data.shape[0]])
 

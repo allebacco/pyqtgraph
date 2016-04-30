@@ -63,3 +63,5 @@ static double pyAsDouble(PyObject* obj)
 %Include ViewBoxBase.sip
 %Include PlotItemBase.sip
 %Include GraphicsViewBase.sip
+
+%Include functions.sip

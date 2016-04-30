@@ -24,7 +24,7 @@ p2 = pg.ViewBox()
 p1.showAxis('right')
 p1.scene().addItem(p2)
 p1.getAxis('right').linkToView(p2)
-p2.setXLink(p1)
+p2.setXLink(p1.vb)
 p1.getAxis('right').setLabel('axis2', color='#0000ff')
 
 ## create third ViewBox. 
@@ -34,7 +34,7 @@ ax3 = pg.AxisItem('right')
 p1.layout.addItem(ax3, 2, 3)
 p1.scene().addItem(p3)
 ax3.linkToView(p3)
-p3.setXLink(p1)
+p3.setXLink(p1.vb)
 ax3.setZValue(-10000)
 ax3.setLabel('axis 3', color='#ff0000')
 
