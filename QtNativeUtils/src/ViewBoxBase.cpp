@@ -45,6 +45,9 @@ ViewBoxBase::ViewBoxBase(QGraphicsItem *parent, Qt::WindowFlags wFlags, const QP
     mAutoVisibleOnly.clear();
     mAutoVisibleOnly << false << false;
 
+    mLinkedViews.clear();
+    mLinkedViews << QWeakPointer<ViewBoxBase>() << QWeakPointer<ViewBoxBase>();
+
     mMouseEnabled << enableMouse << enableMouse;
 
     mChildGroup = new ChildGroup(this);
@@ -69,9 +72,6 @@ ViewBoxBase::ViewBoxBase(QGraphicsItem *parent, Qt::WindowFlags wFlags, const QP
     mAxHistoryPointer = -1;
 
     setAspectLocked(lockAspect!=0.0, lockAspect);
-
-    mLinkedViews.clear();
-    mLinkedViews << QWeakPointer<ViewBoxBase>() << QWeakPointer<ViewBoxBase>();
 
     mMenu = new QMenu();
 }
@@ -208,6 +208,19 @@ void ViewBoxBase::updateViewRange(const bool forceX, const bool forceY)
         emit sigRangeChanged(viewTargetRange[0], viewTargetRange[1]);
         update();
         setMatrixNeedsUpdate(true);
+
+        if(changed[0])
+        {
+            ViewBoxBase* link = linkedView(XAxis);
+            if(link!=nullptr)
+                link->linkedViewChanged(this, XAxis);
+        }
+        if(changed[1])
+        {
+            ViewBoxBase* link = linkedView(YAxis);
+            if(link!=nullptr)
+                link->linkedViewChanged(this, YAxis);
+        }
     }
 /*
     TODO: to be implemented

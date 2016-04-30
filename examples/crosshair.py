@@ -47,9 +47,8 @@ def update():
 
 region.sigRegionChanged.connect(update)
 
-def updateRegion(window, viewRange):
-    rgn = viewRange[0]
-    region.setRegion(rgn)
+def updateRegion(xRange, yRange):
+    region.setRegion(xRange)
 
 p1.sigRangeChanged.connect(updateRegion)
 
