@@ -56,6 +56,7 @@ makefile.extra_cxxflags.append('-std=c++11')
 makefile.extra_cxxflags.append('-Wno-deprecated')
 makefile.extra_cxxflags.append('-Wno-unused-parameter')
 makefile.extra_cxxflags.append('-Wno-unused-function')
+makefile.extra_cxxflags.append('-funsafe-math-optimizations')
 
 
 # Generate the Makefile itself.

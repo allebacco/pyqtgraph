@@ -8,7 +8,7 @@ TARGET = QtNativeUtils
 TEMPLATE = lib
 CONFIG += static
 
-QMAKE_CXXFLAGS += -std=c++11 -Wno-deprecated  -Wno-unused-parameter -Wno-unused-function
+QMAKE_CXXFLAGS += -std=c++11 -Wno-deprecated  -Wno-unused-parameter -Wno-unused-function -funsafe-math-optimizations
 
 INCLUDEPATH += src \
                src/mouseevents
@@ -55,7 +55,8 @@ HEADERS += src/QtNativeUtils.h \
     src/graphicsitems/ChildGroup.h \
     src/Range.h \
     src/graphicsitems/UIGraphicsItem.h \
-    src/functions.h
+    src/functions.h \
+    src/internal/functions_impl.h
 
 
 NUMPY_INCLUDE_1 = /usr/local/lib/python2.7/dist-packages/numpy/core/include

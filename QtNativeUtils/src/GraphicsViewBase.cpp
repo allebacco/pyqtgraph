@@ -26,7 +26,7 @@ QRectF GraphicsViewBase::viewRect() const
 {
     // Return the boundaries of the view in scene coordinates
     // easier to just return self.range ?
-    return viewportTransform().inverted().mapRect(QRectF(rect()));
+    return inverted(viewportTransform()).mapRect(QRectF(rect()));
 }
 
 QList<Range> GraphicsViewBase::viewRange() const

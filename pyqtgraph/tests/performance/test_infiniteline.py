@@ -14,7 +14,7 @@ curve = p.plot()
 
 # Add a large number of horizontal InfiniteLine to plot
 for i in range(1000):
-    line = pg.InfiniteLine(pos=np.random.randint(5000), movable=True)
+    line = pg.InfiniteLine(pos=float(np.random.randint(5000)), movable=True)
     p.addItem(line)
 
 data = np.random.normal(size=(50, 5000))

@@ -1343,8 +1343,8 @@ def arrayToQPath(x, y, connect='all'):
     connections.
     """
     if type(connect) is str:
-        x = x.astype(np.float64)
-        y = y.astype(np.float64)
+        #x = x.astype(np.float64)
+        #y = y.astype(np.float64)
         return QtNativeUtils.arrayToQPath(x, y, connect.lower())
 
     ## Create all vertices in path. The method used below creates a binary format so that all
@@ -2212,7 +2212,8 @@ def invertQTransform(tr):
     """
     # Try first with QTransform.inverted()
 
-    inv = tr.inverted()
+    #inv = tr.inverted()
+    inv = QtNativeUtils.inverted(tr)
     if inv[1] is True:
         return inv[0]
     else:

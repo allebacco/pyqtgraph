@@ -250,31 +250,31 @@ public:
      * \param point
      * \return
      */
-    QPointF	mapToView(const QPointF& point) const { return childTransform().inverted().map(point); }
+    QPointF	mapToView(const QPointF& point) const { return inverted(childTransform()).map(point); }
     /*!
      * \brief Maps from the local coordinates of the ViewBox to the coordinate system displayed inside the ViewBox
      * \param point
      * \return
      */
-    QPointF	mapToView(const QPoint& point) const { return childTransform().inverted().map(QPointF(point)); }
+    QPointF	mapToView(const QPoint& point) const { return inverted(childTransform()).map(QPointF(point)); }
     /*!
      * \brief Maps from the local coordinates of the ViewBox to the coordinate system displayed inside the ViewBox
      * \param rect
      * \return
      */
-    QPolygonF mapToView(const QRectF& rect) const { return childTransform().inverted().map(rect); }
+    QPolygonF mapToView(const QRectF& rect) const { return inverted(childTransform()).map(rect); }
     /*!
      * \brief Maps from the local coordinates of the ViewBox to the coordinate system displayed inside the ViewBox
      * \param polygon
      * \return
      */
-    QPolygonF mapToView(const QPolygonF& polygon) const { return childTransform().inverted().map(polygon); }
+    QPolygonF mapToView(const QPolygonF& polygon) const { return inverted(childTransform()).map(polygon); }
     /*!
      * \brief Maps from the local coordinates of the ViewBox to the coordinate system displayed inside the ViewBox
      * \param path
      * \return
      */
-    QPainterPath mapToView(const QPainterPath& path) const { return childTransform().inverted().map(path); }
+    QPainterPath mapToView(const QPainterPath& path) const { return inverted(childTransform()).map(path); }
     /*!
      * \brief Maps from the local coordinates of the ViewBox to the coordinate system displayed inside the ViewBox
      * \param x

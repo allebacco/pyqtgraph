@@ -896,7 +896,7 @@ void ViewBoxBase::linkedWheelEvent(QGraphicsSceneWheelEvent *event, const ViewBo
     if((axis!=YAxis && axis!= XYAxes) || !mMouseEnabled[1])
         sy = 1.0;
 
-    QPointF center = mChildGroup->transform().inverted().map(event->pos());
+    QPointF center = inverted(mChildGroup->transform()).map(event->pos());
 
     _resetTarget();
     scaleBy(QPointF(sx, sy), center);
@@ -943,7 +943,7 @@ void ViewBoxBase::mouseDragEvent(MouseDragEvent *event, const ViewBoxBase::Axis 
         }
         else
         {
-            QTransform tr = mChildGroup->transform().inverted();
+            QTransform tr = inverted(mChildGroup->transform());
             QPointF dif = lastPos - pos;
             QPointF p = tr.map(QPointF(dif.x()*mask.x(), dif.y()*mask.y())) - tr.map(QPointF(0.0, 0.0));
             double x = (mask.x() == 1.0) ? p.x() : 0.0;
@@ -968,7 +968,7 @@ void ViewBoxBase::mouseDragEvent(MouseDragEvent *event, const ViewBoxBase::Axis 
         s.setX(std::pow(s.x(), dif.x()));
         s.setY(std::pow(s.y(), dif.y()));
 
-        QTransform tr = mChildGroup->transform().inverted();
+        QTransform tr = inverted(mChildGroup->transform());
         QPointF center = tr.map(event->buttonDownPos(Qt::RightButton));
 
         double x = s.x() * mask.x();

@@ -11,6 +11,7 @@
 #include "mouseevents/HoverEvent.h"
 #include "mouseevents/MouseDragEvent.h"
 #include "Range.h"
+#include "functions.h"
 
 
 class GraphicsViewBase;
@@ -81,11 +82,11 @@ public:
 
     virtual QTransform deviceTransform() const = 0;
 
-    QPointF	mapFromDevice(const QPointF& point) const { return deviceTransform().inverted().map(point); }
-    QPointF	mapFromDevice(const QPoint& point) const { return deviceTransform().inverted().map(QPointF(point)); }
-    QPolygonF mapFromDevice(const QRectF& rect) const { return deviceTransform().inverted().map(rect); }
-    QPolygonF mapFromDevice(const QPolygonF& polygon) const { return deviceTransform().inverted().map(polygon); }
-    QPainterPath mapFromDevice(const QPainterPath& path) const { return deviceTransform().inverted().map(path); }
+    QPointF	mapFromDevice(const QPointF& point) const { return inverted(deviceTransform()).map(point); }
+    QPointF	mapFromDevice(const QPoint& point) const { return inverted(deviceTransform()).map(QPointF(point)); }
+    QPolygonF mapFromDevice(const QRectF& rect) const { return inverted(deviceTransform()).map(rect); }
+    QPolygonF mapFromDevice(const QPolygonF& polygon) const { return inverted(deviceTransform()).map(polygon); }
+    QPainterPath mapFromDevice(const QPainterPath& path) const { return inverted(deviceTransform()).map(path); }
     QPointF	mapFromDevice(qreal x, qreal y) const { return mapFromDevice(QPointF(x, y)); }
 
     QPointF	mapToDevice(const QPointF& point) const { return deviceTransform().map(point); }
@@ -98,8 +99,8 @@ public:
     QRectF mapRectToDevice(const QRectF& rect) const { return deviceTransform().mapRect(rect); }
     QRect mapRectToDevice(const QRect& rect) const { return deviceTransform().mapRect(rect); }
 
-    QRectF mapRectFromDevice(const QRectF& rect) const { return deviceTransform().inverted().mapRect(rect); }
-    QRect mapRectFromDevice(const QRect& rect) const { return deviceTransform().inverted().mapRect(rect); }
+    QRectF mapRectFromDevice(const QRectF& rect) const { return inverted(deviceTransform()).mapRect(rect); }
+    QRect mapRectFromDevice(const QRect& rect) const { return inverted(deviceTransform()).mapRect(rect); }
 
     QPointF	mapToView(const QPointF& point) const { return viewTransform().map(point); }
     QPointF	mapToView(const QPoint& point) const { return viewTransform().map(QPointF(point)); }
@@ -111,15 +112,15 @@ public:
     QRectF mapRectToView(const QRectF& rect) const { return viewTransform().mapRect(rect); }
     QRect mapRectToView(const QRect& rect) const { return viewTransform().mapRect(rect); }
 
-    QPointF	mapFromView(const QPointF& point) const { return viewTransform().inverted().map(point); }
-    QPointF	mapFromView(const QPoint& point) const { return viewTransform().inverted().map(QPointF(point)); }
-    QPolygonF mapFromView(const QRectF& rect) const { return viewTransform().inverted().map(rect); }
-    QPolygonF mapFromView(const QPolygonF& polygon) const { return viewTransform().inverted().map(polygon); }
-    QPainterPath mapFromView(const QPainterPath& path) const { return viewTransform().inverted().map(path); }
+    QPointF	mapFromView(const QPointF& point) const { return inverted(viewTransform()).map(point); }
+    QPointF	mapFromView(const QPoint& point) const { return inverted(viewTransform()).map(QPointF(point)); }
+    QPolygonF mapFromView(const QRectF& rect) const { return inverted(viewTransform()).map(rect); }
+    QPolygonF mapFromView(const QPolygonF& polygon) const { return inverted(viewTransform()).map(polygon); }
+    QPainterPath mapFromView(const QPainterPath& path) const { return inverted(viewTransform()).map(path); }
     QPointF	mapFromView(qreal x, qreal y) const { return mapFromView(QPointF(x, y)); }
 
-    QRectF mapRectFromView(const QRectF& rect) const { return viewTransform().inverted().mapRect(rect); }
-    QRect mapRectFromView(const QRect& rect) const { return viewTransform().inverted().mapRect(rect); }
+    QRectF mapRectFromView(const QRectF& rect) const { return inverted(viewTransform()).mapRect(rect); }
+    QRect mapRectFromView(const QRect& rect) const { return inverted(viewTransform()).mapRect(rect); }
 
     /*!
      * \brief Angle between this item and a relativeItem

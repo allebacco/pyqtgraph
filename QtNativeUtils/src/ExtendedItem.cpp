@@ -29,7 +29,7 @@ QVector<Point> ExtendedItem::pixelVectors(const QPointF& direction) const
     QLineF normView(dirLine.unitVector());
     QLineF normOrtho(normView.normalVector());
 
-    QTransform dti = dt.inverted();
+    QTransform dti = inverted(dt);
     result[0] = Point(dti.map(normView).p2());
     result[1] = Point(dti.map(normOrtho).p2());
 
@@ -179,17 +179,17 @@ QPainterPath ExtendedItem::childrenShape() const
 
 QPointF ExtendedItem::pixelSize() const
 {
-    return deviceTransform().inverted().map(QPointF(1.0, 1.0));
+    return inverted(deviceTransform()).map(QPointF(1.0, 1.0));
 }
 
 double ExtendedItem::pixelWidth() const
 {
-    return deviceTransform().inverted().map(QLineF(0.0, 0.0, 1.0, 0.0)).length();
+    return inverted(deviceTransform()).map(QLineF(0.0, 0.0, 1.0, 0.0)).length();
 }
 
 double ExtendedItem::pixelHeight() const
 {
-    return deviceTransform().inverted().map(QLineF(0.0, 0.0, 0.0, 1.0)).length();
+    return inverted(deviceTransform()).map(QLineF(0.0, 0.0, 0.0, 1.0)).length();
 }
 
 QPointF ExtendedItem::viewPos() const
