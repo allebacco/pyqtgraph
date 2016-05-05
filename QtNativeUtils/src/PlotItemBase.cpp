@@ -1,5 +1,7 @@
 #include "PlotItemBase.h"
 
+#include <QGraphicsGridLayout>
+
 PlotItemBase::PlotItemBase(QGraphicsItem* parent, ViewBoxBase* viewBox, Qt::WindowFlags wFlags) :
     GraphicsWidget(parent, wFlags)
 {
@@ -9,6 +11,21 @@ PlotItemBase::PlotItemBase(QGraphicsItem* parent, ViewBoxBase* viewBox, Qt::Wind
 
     mViewBox = viewBox;
     mViewBox->setParentItem(this);
+
+    setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+
+    QGraphicsGridLayout* gridLayout = new QGraphicsGridLayout();
+    gridLayout->setContentsMargins(1,1,1,1);
+    gridLayout->setHorizontalSpacing(0);
+    gridLayout->setVerticalSpacing(0);
+    setLayout(gridLayout);
+
+    connect(mViewBox, SIGNAL(sigRangeChanged(Range,Range)), this, SIGNAL(sigRangeChanged(Range,Range)));
+    connect(mViewBox, SIGNAL(sigXRangeChanged(Range)), this, SIGNAL(sigXRangeChanged(Range)));
+    connect(mViewBox, SIGNAL(sigYRangeChanged(Range)), this, SIGNAL(sigYRangeChanged(Range)));
+
+    //self.vb.sigStateChanged.connect(self.viewStateChanged)
+    //self.setMenuEnabled(enableMenu, enableMenu) ## en/disable plotitem and viewbox menus
 }
 
 void PlotItemBase::setRange(const Range &xRange, const Range &yRange, const double padding, const bool disableAutoRange)

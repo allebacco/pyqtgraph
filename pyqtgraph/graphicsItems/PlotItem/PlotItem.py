@@ -38,6 +38,8 @@ from ..GraphicsItem import GraphicsItem
 
 from ...QtNativeUtils import PlotItemBase
 
+import sip
+
 if QT_LIB == 'PyQt4':
     from .plotConfigTemplate_pyqt import *
 elif QT_LIB == 'PySide':
@@ -133,7 +135,7 @@ class PlotItem(GraphicsItem, PlotItemBase):
         PlotItemBase.__init__(self, parent, viewBox=viewBox)
         GraphicsItem.__init__(self)
         
-        self.setSizePolicy(QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Expanding)
+        #self.setSizePolicy(QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Expanding)
         
         ## Set up control buttons
         path = os.path.dirname(__file__)
@@ -146,11 +148,13 @@ class PlotItem(GraphicsItem, PlotItemBase):
         self.buttonsHidden = False ## whether the user has requested buttons to be hidden
         self.mouseHovering = False
         
-        self.layout = QtGui.QGraphicsGridLayout()
-        self.layout.setContentsMargins(1,1,1,1)
-        self.setLayout(self.layout)
-        self.layout.setHorizontalSpacing(0)
-        self.layout.setVerticalSpacing(0)
+        #self.layout = QtGui.QGraphicsGridLayout()
+        #self.layout.setContentsMargins(1,1,1,1)
+        #self.layout.setHorizontalSpacing(0)
+        #self.layout.setVerticalSpacing(0)
+        #self.setLayout(self.layout)
+        #layout = self.layout()
+        layout = sip.cast(self.layout(), QtGui.QGraphicsGridLayout)
         
         #if viewBox is None:
         #    viewBox = ViewBox(parent=self)
@@ -161,11 +165,11 @@ class PlotItem(GraphicsItem, PlotItemBase):
         
         if name is not None:
             self.vb.register(name)
-        self.vb.sigRangeChanged.connect(self.sigRangeChanged)
-        self.vb.sigXRangeChanged.connect(self.sigXRangeChanged)
-        self.vb.sigYRangeChanged.connect(self.sigYRangeChanged)
+        #self.vb.sigRangeChanged.connect(self.sigRangeChanged)
+        #self.vb.sigXRangeChanged.connect(self.sigXRangeChanged)
+        #self.vb.sigYRangeChanged.connect(self.sigYRangeChanged)
         
-        self.layout.addItem(self.vb, 2, 1)
+        layout.addItem(self.vb, 2, 1)
         self.alpha = 1.0
         self.autoAlpha = True
         self.spectrumMode = False
@@ -183,28 +187,28 @@ class PlotItem(GraphicsItem, PlotItemBase):
                 axis = AxisItem(orientation=k, parent=self)
             axis.linkToView(self.vb)
             self.axes[k] = {'item': axis, 'pos': pos}
-            self.layout.addItem(axis, *pos)
+            layout.addItem(axis, *pos)
             axis.setZValue(-1000)
             axis.setFlag(axis.ItemNegativeZStacksBehindParent)
         
         self.titleLabel = LabelItem('', size='11pt', parent=self)
-        self.layout.addItem(self.titleLabel, 0, 1)
+        layout.addItem(self.titleLabel, 0, 1)
         self.setTitle(None)  ## hide
         
         
         for i in range(4):
-            self.layout.setRowPreferredHeight(i, 0)
-            self.layout.setRowMinimumHeight(i, 0)
-            self.layout.setRowSpacing(i, 0)
-            self.layout.setRowStretchFactor(i, 1)
+            layout.setRowPreferredHeight(i, 0)
+            layout.setRowMinimumHeight(i, 0)
+            layout.setRowSpacing(i, 0)
+            layout.setRowStretchFactor(i, 1)
             
         for i in range(3):
-            self.layout.setColumnPreferredWidth(i, 0)
-            self.layout.setColumnMinimumWidth(i, 0)
-            self.layout.setColumnSpacing(i, 0)
-            self.layout.setColumnStretchFactor(i, 1)
-        self.layout.setRowStretchFactor(2, 100)
-        self.layout.setColumnStretchFactor(1, 100)
+            layout.setColumnPreferredWidth(i, 0)
+            layout.setColumnMinimumWidth(i, 0)
+            layout.setColumnSpacing(i, 0)
+            layout.setColumnStretchFactor(i, 1)
+        layout.setRowStretchFactor(2, 100)
+        layout.setColumnStretchFactor(1, 100)
         
 
         self.items = []
@@ -1140,13 +1144,14 @@ class PlotItem(GraphicsItem, PlotItemBase):
         Set the title of the plot. Basic HTML formatting is allowed.
         If title is None, then the title will be hidden.
         """
+        layout = sip.cast(self.layout(), QtGui.QGraphicsGridLayout)
         if title is None:
             self.titleLabel.setVisible(False)
-            self.layout.setRowFixedHeight(0, 0)
+            layout.setRowFixedHeight(0, 0)
             self.titleLabel.setMaximumHeight(0)
         else:
             self.titleLabel.setMaximumHeight(30)
-            self.layout.setRowFixedHeight(0, 30)
+            layout.setRowFixedHeight(0, 30)
             self.titleLabel.setVisible(True)
             self.titleLabel.setText(title, **args)
 
