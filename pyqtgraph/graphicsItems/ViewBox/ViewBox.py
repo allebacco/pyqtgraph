@@ -176,7 +176,7 @@ class ViewBox(ViewBoxBase):
 
         #}
 
-        self._updatingRange = False  ## Used to break recursive loops. See updateAutoRange.
+        #self._updatingRange = False  ## Used to break recursive loops. See updateAutoRange.
         #self._itemBoundsCache = weakref.WeakKeyDictionary()
 
         self.locateGroup = None  ## items displayed when using ViewBox.locate(item)
@@ -1263,11 +1263,12 @@ class ViewBox(ViewBoxBase):
         ev.accept()
     '''
 
+    '''
     def mouseClickEvent(self, ev):
-        print 'mouse click', ev
         if ev.button() == QtCore.Qt.RightButton and self.menuEnabled():
             ev.accept()
             self.raiseContextMenu(ev)
+    '''
 
     def raiseContextMenu(self, ev):
         print ev

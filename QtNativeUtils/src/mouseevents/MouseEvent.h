@@ -3,37 +3,22 @@
 
 
 #include <QGraphicsItem>
+#include <QEvent>
 
 
-class MouseEvent
+class MouseEvent: public QEvent
 {
 public:
+
     MouseEvent();
 
     virtual ~MouseEvent()
-    {
-    }
+    {}
 
     void setCurrentItem(QGraphicsItem* item)
     {
         mCurrentItem = item;
     }
-
-    void accept()
-    {
-        // An item should call this method if it can handle the event.
-        // This will prevent the event being delivered to any other items.
-        mAccepted = true;
-    }
-
-    void ignore()
-    {
-        // An item should call this method if it cannot handle the event.
-        // This will allow the event to be delivered to other items.
-        mAccepted = false;
-    }
-
-    bool isAccepted() const { return mAccepted; }
 
     QPointF scenePos() const
     {
@@ -91,9 +76,12 @@ public:
         return mScenePos;
     }
 
+public:
+
+    static constexpr QEvent::Type EvType = static_cast<QEvent::Type>(QEvent::User+1);
+
 protected:
 
-    bool mAccepted;
     QGraphicsItem* mCurrentItem;
     QPointF mScenePos;
     QPoint mScreenPos;

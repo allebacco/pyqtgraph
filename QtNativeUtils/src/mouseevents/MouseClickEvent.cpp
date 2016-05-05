@@ -4,7 +4,7 @@
 
 MouseClickEvent::MouseClickEvent(const QGraphicsSceneMouseEvent* event, const bool doubleClick)
 {
-    mAccepted = false;
+    setAccepted(false);
     mCurrentItem = NULL;
     mDoubleClick = doubleClick;
     mScenePos = event->scenePos();

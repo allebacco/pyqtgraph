@@ -550,10 +550,10 @@ public:
     void setMenuEnabled(const bool enableMenu=true);
     bool menuEnabled() const;
 
-    //virtual void mouseClickEvent(MouseClickEvent* event);
+    virtual void mouseClickEvent(MouseClickEvent* event);
     virtual QList<QAction*> getContextMenus(QEvent* event);
     QMenu* getMenu(MouseClickEvent* event) const;
-    //virtual void raiseContextMenu(MouseClickEvent* event);
+    virtual void raiseContextMenu(QEvent* event);
 
 public slots:
 

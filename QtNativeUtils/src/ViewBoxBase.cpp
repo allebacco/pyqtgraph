@@ -1290,7 +1290,7 @@ void ViewBoxBase::setMenuEnabled(const bool enableMenu)
     mEnableMenu = enableMenu;
     emit sigStateChanged(this);
 }
-/*
+
 void ViewBoxBase::mouseClickEvent(MouseClickEvent *event)
 {
     if(event->button()==Qt::RightButton && mEnableMenu)
@@ -1299,7 +1299,7 @@ void ViewBoxBase::mouseClickEvent(MouseClickEvent *event)
         raiseContextMenu(event);
     }
 }
-*/
+
 QList<QAction*> ViewBoxBase::getContextMenus(QEvent *event)
 {
     if(mEnableMenu)

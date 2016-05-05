@@ -1,6 +1,6 @@
 #include "MouseEvent.h"
 
-MouseEvent::MouseEvent()
+MouseEvent::MouseEvent(): QEvent(EvType)
 {
     mCurrentItem = nullptr;
 }

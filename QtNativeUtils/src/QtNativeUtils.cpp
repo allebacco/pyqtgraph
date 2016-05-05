@@ -7,11 +7,15 @@
 #include <numpy/arrayobject.h>
 
 #include "Range.h"
+#include "mouseevents/MouseEvent.h"
 
 
 void init_package()
 {
     Range::registerMetatype();
+    int type = QEvent::registerEventType(MouseEvent::EvType);
+    if(type!=MouseEvent::EvType)
+        qWarning("Error in registering MouseEvent event");
 
     import_array();
 }
