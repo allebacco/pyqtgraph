@@ -1,7 +1,11 @@
 from ..Qt import QtGui, QtCore
 from .GraphicsObject import GraphicsObject
 
+from ..QtNativeUtils import ButtonItem
+
 __all__ = ['ButtonItem']
+
+'''
 class ButtonItem(GraphicsObject):
     """Button graphicsItem displaying an image."""
     
@@ -33,7 +37,7 @@ class ButtonItem(GraphicsObject):
         if self.enabled:
             self.clicked.emit(self)
         
-    def mouseHoverEvent(self, ev):
+    def hoverEvent(self, ev):
         if not self.enabled:
             return
         if ev.isEnter():
@@ -55,4 +59,4 @@ class ButtonItem(GraphicsObject):
         
     def boundingRect(self):
         return QtCore.QRectF(self.pixmap.rect())
-        
+'''

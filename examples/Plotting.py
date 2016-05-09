@@ -93,8 +93,6 @@ p8.plot(data2, pen=(255,255,255,200))
 lr = pg.LinearRegionItem([400,700])
 lr.setZValue(-10)
 
-print 'LinearregionItem.type()', lr.type()
-
 p8.addItem(lr)
 
 p9 = win.addPlot(title="Zoom on selected region")

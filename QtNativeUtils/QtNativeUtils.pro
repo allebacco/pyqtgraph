@@ -8,6 +8,7 @@ TARGET = QtNativeUtils
 TEMPLATE = lib
 CONFIG += static
 
+
 QMAKE_CXXFLAGS += -std=c++11 -Wno-deprecated  -Wno-unused-parameter -Wno-unused-function -funsafe-math-optimizations
 
 INCLUDEPATH += src \
@@ -31,7 +32,8 @@ SOURCES += src/QtNativeUtils.cpp \
     src/graphicsitems/ChildGroup.cpp \
     src/Range.cpp \
     src/graphicsitems/UIGraphicsItem.cpp \
-    src/functions.cpp
+    src/functions.cpp \
+    src/graphicsitems/ButtonItem.cpp
 
 
 HEADERS += src/QtNativeUtils.h \
@@ -56,7 +58,8 @@ HEADERS += src/QtNativeUtils.h \
     src/Range.h \
     src/graphicsitems/UIGraphicsItem.h \
     src/functions.h \
-    src/internal/functions_impl.h
+    src/internal/functions_impl.h \
+    src/graphicsitems/ButtonItem.h
 
 
 NUMPY_INCLUDE_1 = /usr/local/lib/python2.7/dist-packages/numpy/core/include
@@ -86,7 +89,8 @@ OTHER_FILES += sip/Exceptions.sip \
     sip/ChildGroup.sip \
     sip/Range.sip \
     sip/UIGraphicsItem.sip \
-    sip/functions.sip
+    sip/functions.sip \
+    sip/ButtonItem.sip
 
 DISTFILES += \
     sip/ItemGroup.sip
