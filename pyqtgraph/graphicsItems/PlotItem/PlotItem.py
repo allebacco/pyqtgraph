@@ -58,7 +58,7 @@ except:
 
 
 
-class PlotItem(GraphicsItem, PlotItemBase):
+class PlotItem(PlotItemBase):
     
     """
     **Bases:** :class:`GraphicsWidget <pyqtgraph.GraphicsWidget>`
@@ -133,7 +133,7 @@ class PlotItem(GraphicsItem, PlotItemBase):
         """
         viewBox = viewBox if viewBox is not None else ViewBox()
         PlotItemBase.__init__(self, parent, viewBox=viewBox)
-        GraphicsItem.__init__(self)
+        #GraphicsItem.__init__(self)
         
         #self.setSizePolicy(QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Expanding)
         
