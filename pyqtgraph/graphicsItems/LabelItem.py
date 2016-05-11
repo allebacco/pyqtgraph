@@ -56,6 +56,7 @@ class LabelItem(GraphicsWidget, GraphicsWidgetAnchor):
         if color is None:
             color = getConfigOption('foreground')
         color = fn.mkColor(color)
+        '''
         optlist.append('color: #' + fn.colorStr(color)[:6])
         if 'size' in opts:
             optlist.append('font-size: ' + opts['size'])
@@ -64,8 +65,24 @@ class LabelItem(GraphicsWidget, GraphicsWidgetAnchor):
         if 'italic' in opts and opts['italic'] in [True, False]:
             optlist.append('font-style: ' + {True:'italic', False:'normal'}[opts['italic']])
         full = "<span style='%s'>%s</span>" % ('; '.join(optlist), text)
+        '''
+        font = self.item.font()
+
+        if 'size' in opts:
+            size = opts['size']
+            size = float(size.replace('pt', '').replace('em', '').replace('px', ''))
+            font.setPointSizeF(size)
+        if 'bold' in opts:
+            bold = bool(opts['bold'])
+            font.setBold(bold)
+        if 'italic' in opts:
+            italic = bool(opts['italic'])
+            font.setItalic(italic)
+        self.item.setFont(font)
+
+        self.item.setDefaultTextColor(color)
         #print full
-        self.item.setHtml(full)
+        self.item.setHtml(text)
         self.updateMin()
         self.resizeEvent(None)
         self.updateGeometry()
