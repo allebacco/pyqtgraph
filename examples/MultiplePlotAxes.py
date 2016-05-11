@@ -10,6 +10,7 @@ import initExample ## Add path to library (just for examples; you do not need th
 import pyqtgraph as pg
 from pyqtgraph.Qt import QtCore, QtGui
 import numpy as np
+import sip
 
 pg.mkQApp()
 
@@ -31,7 +32,7 @@ p1.getAxis('right').setLabel('axis2', color='#0000ff')
 ## this time we need to create a new axis as well.
 p3 = pg.ViewBox()
 ax3 = pg.AxisItem('right')
-p1.layout.addItem(ax3, 2, 3)
+sip.cast(p1.layout(), QtGui.QGraphicsGridLayout).addItem(ax3, 2, 3)
 p1.scene().addItem(p3)
 ax3.linkToView(p3)
 p3.setXLink(p1.vb)
