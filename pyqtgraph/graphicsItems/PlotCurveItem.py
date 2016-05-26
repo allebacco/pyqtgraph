@@ -39,6 +39,8 @@ class PlotCurveItem(GraphicsObject):
     sigPlotChanged = QtCore.Signal(object)
     sigClicked = QtCore.Signal(object)
 
+    _qtBaseClass = GraphicsObject
+
     def __init__(self, *args, **kargs):
         """
         Forwards all arguments to :func:`setData <pyqtgraph.PlotCurveItem.setData>`.
@@ -52,7 +54,7 @@ class PlotCurveItem(GraphicsObject):
                         clicked on. Defaults to False.
         ==============  =======================================================
         """
-        GraphicsObject.__init__(self, kargs.get('parent', None))
+        GraphicsObject.__init__(self, parent=kargs.get('parent', None))
         self.clear()
 
         ## this is disastrous for performance.

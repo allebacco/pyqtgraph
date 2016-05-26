@@ -33,15 +33,19 @@ p1.getAxis('right').setLabel('axis2', color='#0000ff')
 p3 = pg.ViewBox()
 ax3 = pg.AxisItem('right')
 sip.cast(p1.layout(), QtGui.QGraphicsGridLayout).addItem(ax3, 2, 3)
+print '1'
 p1.scene().addItem(p3)
+print '2'
 ax3.linkToView(p3)
 p3.setXLink(p1.vb)
 ax3.setZValue(-10000)
 ax3.setLabel('axis 3', color='#ff0000')
+print '3'
 
 
 ## Handle view resizing 
 def updateViews():
+    print 'updateViews - start'
     ## view has resized; update auxiliary views to match
     global p1, p2, p3
     p2.setGeometry(p1.vb.sceneBoundingRect())
@@ -52,14 +56,20 @@ def updateViews():
     ## (probably this should be handled in ViewBox.resizeEvent)
     p2.linkedViewChanged(p1.vb, p2.XAxis)
     p3.linkedViewChanged(p1.vb, p3.XAxis)
+    print 'updateViews - end'
 
 updateViews()
 p1.vb.sigResized.connect(updateViews)
 
+print '4'
 
-p1.plot([1,2,4,8,16,32])
-p2.addItem(pg.PlotCurveItem([10,20,40,80,40,20], pen='b'))
-p3.addItem(pg.PlotCurveItem([3200,1600,800,400,200,100], pen='r'))
+#p1.plot([1,2,4,8,16,32])
+p1.addItem(pg.PlotCurveItem([1,2,4,8,16,32], pen='y'))
+print '5'
+#p2.addItem(pg.PlotCurveItem([10,20,40,80,40,20], pen='b'))
+print '6'
+#p2.addItem(pg.PlotCurveItem([3200,1600,800,400,200,100], pen='r'))
+print '7'
 
 ## Start Qt event loop unless running in interactive mode or using pyside.
 if __name__ == '__main__':
