@@ -140,7 +140,7 @@ class ViewBox(ViewBoxBase):
         ViewBoxBase.__init__(self, parent=parent, wFlags=Qt.Widget, border=border, lockAspect=lockAspect, invertX=invertX, invertY=invertY, enableMouse=enableMouse, enableMenu=enableMenu)
 
         #GraphicsItem.__init__(self)
-        self.name = None
+        #self.name = None
         #self.linksBlocked = False
         #self.addedItems = []
 
@@ -224,10 +224,11 @@ class ViewBox(ViewBoxBase):
 
         #self.menu = QtGui.QMenu() #ViewBoxMenu(self)
 
-        self.register(name)
-        if name is None:
-            self.updateViewLists()
+        #self.register_view(name)
+        #if name is None:
+        #    self.updateViewLists()
 
+    '''
     def register(self, name):
         """
         Add this ViewBox to the registered list of views.
@@ -256,10 +257,13 @@ class ViewBox(ViewBoxBase):
         del ViewBox.AllViews[self]
         if self.name is not None:
             del ViewBox.NamedViews[self.name]
+    '''
 
+    '''
     def close(self):
         self.clear()
         self.unregister()
+    '''
 
     def implements(self, interface):
         return interface == 'ViewBox'

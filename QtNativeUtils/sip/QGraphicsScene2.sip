@@ -30,6 +30,13 @@ public:
 
     virtual QGraphicsView* getViewWidget() const /HoldGIL/;
 
+protected:
+
+    QList<QGraphicsItem*> itemsNearEvent(MouseEvent* event,
+                                         const Qt::ItemSelectionMode selMode=Qt::IntersectsItemShape,
+                                         const Qt::SortOrder sortOrder=Qt::DescendingOrder,
+                                         const bool hoverable=false);
+
 signals:
 
     void sigPrepareForPaint();

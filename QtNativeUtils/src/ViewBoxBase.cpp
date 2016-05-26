@@ -74,10 +74,13 @@ ViewBoxBase::ViewBoxBase(QGraphicsItem *parent, Qt::WindowFlags wFlags, const QP
     setAspectLocked(lockAspect!=0.0, lockAspect);
 
     mMenu = new QMenu();
+
+    register_view("");
 }
 
 ViewBoxBase::~ViewBoxBase()
 {
+    unregister_view();
     mMenu->deleteLater();
 }
 
@@ -1306,9 +1309,13 @@ void ViewBoxBase::mouseClickEvent(MouseClickEvent *event)
 
 QList<QAction*> ViewBoxBase::getContextMenus(QEvent *event)
 {
+    QList<QAction*> actions;
     if(mEnableMenu)
-        return mMenu->actions();
-    return QList<QAction*>();
+    {
+        for(QAction* a: mMenu->actions())
+            actions.append(a);
+    }
+    return actions;
 }
 
 void ViewBoxBase::close()

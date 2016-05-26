@@ -7,19 +7,6 @@
 #include "Point.h"
 #include "Interfaces.h"
 
-static double absZValue(QGraphicsItem* item)
-{
-    if(item==nullptr)
-        return 0;
-    return item->zValue() + absZValue(item->parentItem());
-}
-
-
-static bool absZvalueCompareDescending(QGraphicsItem* aItem, QGraphicsItem* bItem)
-{
-    return absZValue(bItem) < absZValue(aItem);
-}
-
 
 QGraphicsScene2::QGraphicsScene2(const double clickRadius, const double moveDistance, QObject* parent) :
     QGraphicsScene(parent)
@@ -391,6 +378,23 @@ bool QGraphicsScene2::sendClickEvent(MouseClickEvent *ev)
     emit sigMouseClicked(ev);
     return ev->isAccepted();
 }
+*/
+
+
+static double absZValue(QGraphicsItem* item)
+{
+    if(item==nullptr)
+        return 0.0;
+    return item->zValue() + absZValue(item->parentItem());
+}
+
+
+static bool absZvalueCompareDescending(QGraphicsItem* aItem, QGraphicsItem* bItem)
+{
+    const double b = absZValue(bItem);
+    const double a = absZValue(aItem);
+    return a < b;
+}
 
 
 QList<QGraphicsItem *> QGraphicsScene2::itemsNearEvent(MouseEvent *event,
@@ -403,23 +407,18 @@ QList<QGraphicsItem *> QGraphicsScene2::itemsNearEvent(MouseEvent *event,
 
     QGraphicsView* view = views()[0];
     QTransform tr = view->viewportTransform();
-    QRectF rect = view->mapToScene(0, 0, 2*mClickRadius, 2*mClickRadius).boundingRect();
 
     QPointF point = event->buttonDownScenePos();
-    double w = rect.width();
-    double h = rect.height();
-    QRectF rgn(point.x()-w, point.y()-h, 2.0*w, 2.0*h);
 
     QList<QGraphicsItem*> selItems = items(point, selMode, sortOrder, tr);
 
     QList<QGraphicsItem*> selItems2;
     for(int i=0; i<selItems.size(); ++i)
     {
-        if(!hoverable)
-            continue;
-        QPainterPath shape = selItems[i]->shape();
-        if(!shape.isEmpty() && shape.contains(point))
-            selItems2.append(selItems[i]);
+        QGraphicsItem* currItem = selItems[i];
+        QPainterPath shape = currItem->shape();
+        if(shape.contains(currItem->mapFromScene(point)))
+            selItems2.append(currItem);
     }
 
     // Sort by descending Z-order (don't trust scene.itms() to do this either)
@@ -428,4 +427,3 @@ QList<QGraphicsItem *> QGraphicsScene2::itemsNearEvent(MouseEvent *event,
 
     return selItems2;
 }
-*/

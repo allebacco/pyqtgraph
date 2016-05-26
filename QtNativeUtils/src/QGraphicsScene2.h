@@ -80,6 +80,11 @@ signals:
 
 protected:
 
+    QList<QGraphicsItem*> itemsNearEvent(MouseEvent* event,
+                                         const Qt::ItemSelectionMode selMode=Qt::IntersectsItemShape,
+                                         const Qt::SortOrder sortOrder=Qt::DescendingOrder,
+                                         const bool hoverable=false);
+
     /*
     virtual void sendHoverEvents(QEvent *ev, const bool exitOnly=false);
 
@@ -87,10 +92,6 @@ protected:
 
     virtual bool sendClickEvent(MouseClickEvent* ev);
 
-    QList<QGraphicsItem*> itemsNearEvent(MouseEvent* event,
-                                           const Qt::ItemSelectionMode selMode=Qt::IntersectsItemShape,
-                                           const Qt::SortOrder sortOrder=Qt::DescendingOrder,
-                                           const bool hoverable=false);
 
     MouseClickEvent* clickEventForButton(const Qt::MouseButton btn)
     {
