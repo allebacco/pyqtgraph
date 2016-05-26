@@ -870,6 +870,11 @@ public:
     QMenu* getMenu(MouseClickEvent* event) const { return mMenu; }
     virtual void raiseContextMenu(QEvent* event) {}
 
+    void register_view(const QString& name) {}
+    void unregister_view() {}
+
+    void close();
+
 public slots:
 
     void prepareForPaint();

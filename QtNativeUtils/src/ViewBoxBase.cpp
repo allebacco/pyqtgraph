@@ -1199,7 +1199,11 @@ QVector<Range> ViewBoxBase::childrenBounds(const QPointF& frac, const Range &ort
             if(currItem->flags() & ItemHasNoContents)
                 continue;
 
-            QRectF bounds = mapFromItemToView(goItem, currItem->boundingRect()).boundingRect();
+            qDebug()<<"Data:"<<currItem->data(100).toString();
+
+            QRectF boundsR = currItem->boundingRect();
+
+            QRectF bounds = mapFromItemToView(goItem, boundsR).boundingRect();
             itemBounds.emplace_back(bounds, true, true, 0.0);
         }
     }
@@ -1305,6 +1309,12 @@ QList<QAction*> ViewBoxBase::getContextMenus(QEvent *event)
     if(mEnableMenu)
         return mMenu->actions();
     return QList<QAction*>();
+}
+
+void ViewBoxBase::close()
+{
+    clear();
+    unregister_view();
 }
 
 void ViewBoxBase::wheelEvent(QGraphicsSceneWheelEvent* event)
